@@ -10,20 +10,41 @@
 	<!-- custom styles -->
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 
-	<title>Post Project</title>
+	<title>Postly</title>
 </head>
 <body>
-	<div class='jumbotron'>
-		<div class='container'>
-			<h1>Post-Project</h1>
-			<p>By Ian Civgin</p>
+	<!-- Navbar -->
+	<nav class="navbar navbar-default">
+	  <div class="container-fluid">
+	    <!-- Brand and toggle get grouped for better mobile display -->
+	    <div class='container'>
+		    <div class="navbar-header">
+		      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+		        <span class="sr-only">Toggle navigation</span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		      </button>
+		      <a class="navbar-brand" href="http://localhost:3000/">postly</a>
+		    </div>
 
-			<!-- Add new post link -->
-			<a href='#' type='button' id='create-new-post' data-toggle='modal' data-target='#new-post-modal'>Create a new post</a>
+		    <!-- Collect the nav links, forms, and other content for toggling -->
+		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		      <ul class="nav navbar-nav">
+		      </ul>
+		      <ul class="nav navbar-nav navbar-right">
+		        <li><a href="#">Me</a></li>
+		        <li><a href="#">Feed</a></li>
+		        <li><a href="http://localhost:3000/about">About</a></li>
+		    	<li><a href='#' id='create-new-post' data-toggle='modal' data-target='#new-post-modal'>New</a></li>
+		      </ul>
+		    </div><!-- /.navbar-collapse -->
 		</div>
-	</div>
+	  </div><!-- /.container-fluid -->
+	</nav>
+
 	<div class='container'>
-		
+
 		<!-- Post list -->
 		<div class='row' id='post-list'></div>
 
@@ -34,22 +55,22 @@
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <button type="button" class="close" data-dimdiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 	        <h4 class="modal-title" id="myModalLabel">Make a new post!</h4>
 	      </div>
 	      <div class="modal-body">
 	        <form class='form-group' id='new-post-form'>
-	        	<label for='author'>Your name</label>
+	        	<label for='author'>Author</label>
 				<input class='form-control' id='author' type="text" placeholder='Full name' focus></input>
 
 				<label for='title'>Post title</label>
-				<input class='form-control' id='title' type="text"></input>
+				<input class='form-control' id='title' type="text" placeholder='Add a title'></input>
 
 				<label for='bio'>A bit about yourself ...</label>
 				<textarea class='form-control' rows='4' id='bio' type="text"></textarea>
 
 				<label for='tag'>Tag</label>
-				<input class='form-control' id='tag' type="text" placeholder='Add a tag (start with a "#").'></input>
+				<input class='form-control' id='tag' type="text" placeholder='Add a tag (start with a "#")'></input>
 
 				<label for='content'>Content</label>
 				<textarea class='form-control' rows='4' id='content' type="text"></textarea>
@@ -58,7 +79,7 @@
 				<input class='form-control' id='location' type="text" placeholder='Add a location'></input>
 
 				<label for='picture'>Add a picture (url)</label>
-				<input class='form-control' id='picture' type="text" placeholder='Add a picture url.'></input>
+				<input class='form-control' id='picture' type="text" placeholder='Add a picture url'></input>
 
 				<div class='text-right form-options'>
 					<button type="button" class="btn btn-default" data-dimdiss="modal">Close</button>
@@ -84,8 +105,8 @@
 	<script type="text/javascript" src="scripts/app.js"></script>
 
 	<script type='text/template' id='post-template'>
-		<div class='row post post-container' id='<%= id %>' data-id='<%= id %>'>
-			<div class='col-md-8 col-md-offset-2'>
+		<div class='row post' id='<%= id %>' data-id='<%= id %>'>
+			<div class='col-md-8 col-md-offset-2 post-container'>
 				<div class='row'>
 					<div class='col-md-3'>
 						<img class='author-img' src='<%= picture %>' />
@@ -95,7 +116,7 @@
 						  <span aria-hidden="true">&times;</span>
 						</button>
 						<div class='row info-top-abs'>
-							<h3 class='inline'><%= author %> - </h3><p class='inline'><%= location %></p>
+							<h3 class='inline'><%= author %> </h3><p class='inline'><%= location %></p>
 						</div>
 						<div class='row info-bottom-abs'>
 							<h5><%= bio %></h5>
@@ -109,11 +130,50 @@
 						<p><%= content %></p>
 					</div>
 					<div class='col-md-2'>
-						<p>Respond</p>
-						<p>Like</p>
+						<a href='#' id='edit-post' data-toggle='modal' data-target='#edit-post-modal-<%= id %>'>Edit</a>
+						<p>Respond<br>Like</p>
 					</div>
 				</div>
 			</div>
+		</div>
+		<div class="modal fade" id="edit-post-modal-<%= id %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Edit your post</h4>
+		      </div>
+		      <div class="modal-body">
+		        <form class='form-group' id='edit-post-form-<%= id %>'>
+		        	<label for='author'>Author</label>
+					<input class='form-control' id='author' type="text" value='<%= author %>' focus></input>
+
+					<label for='title'>Post title</label>
+					<input class='form-control' id='title' type="text" value='<%= title %>'></input>
+
+					<label for='bio'>A bit about yourself ...</label>
+					<textarea class='form-control' rows='2' id='bio' type="text"><%= bio %></textarea>
+
+					<label for='tag'>Tag</label>
+					<input class='form-control' id='tag' type="text" value='<%= tag %>'></input>
+
+					<label for='content'>Content</label>
+					<textarea class='form-control' rows='4' id='content' type="text"><%= content %></textarea>
+
+					<label for='location'>Location</label>
+					<input class='form-control' id='location' type="text" value='<%= location %>'></input>
+
+					<label for='picture'>Add a picture (url)</label>
+					<input class='form-control' id='picture' type="text" value='<%= picture %>'></input>
+
+					<div class='text-right form-options'>
+						<button type="button" class="btn btn-default" data-dimdiss="modal">Close</button>
+						<input type="submit" class="btn btn-primary"></input>
+					</div>
+		        </form>
+		      </div>
+		    </div>
+		  </div>
 		</div>
 	</script>
 </body>

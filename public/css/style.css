@@ -1,7 +1,30 @@
-/*New post button & modal*/
+/*Navbar*/
+.navbar {
+	background-color: #00B760;
+	color: white;
+	border-radius: 0px;
+}
+.navbar-default {
+	border-color: transparent;
+}
+
+.navbar-default
+.navbar-brand {
+	color: white;
+}
+
+.navbar-brand {
+	color: white;
+	font-size: 24px;
+}
+.navbar-default
+.navbar-nav > li > a {
+	color: white;
+}
+
+/*New/edit post button & modal*/
 #create-new-post {
 	padding-bottom: 20px;
-	font-size: 16px;
 }
 input {
 	margin-bottom: 5px;
@@ -12,6 +35,9 @@ textarea {
 .form-options {
 	margin-top: 20px;
 }
+label {
+	padding-left: 3px;
+}
 
 /*Post*/
 .inline {
@@ -20,7 +46,7 @@ textarea {
 
 .info-rel {
 	position: relative;
-	min-height: 150px;
+	min-height: 125px;
 }
 .info-top-abs {
 	position: absolute;
@@ -38,11 +64,12 @@ textarea {
 	float: right;
 }
 .author-img {
-	max-height: 150px;
+	max-height: 125px;
 }
 
 .post-container {
-	border: dotted black 1px;
 	margin-bottom: 20px;
+	border-radius: 5px;
 	padding: 20px;
+	background-color: #F2F2F2;
 }

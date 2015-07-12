@@ -47,6 +47,21 @@ $(function() {
 			});
 		},
 
+		//tag load
+		tags: function() {
+			$.get('http://localhost:3000/api/posts', function (data) {
+				var allPosts = data;
+
+				_.each(allPosts, function(post) {
+					var tags = [];
+					tags.push(post.tag);
+					
+					//Add post tags to list template
+
+				});
+			});
+		},
+
 		//create
 		create: function(newPost) {
 			$.ajax({

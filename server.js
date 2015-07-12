@@ -57,6 +57,11 @@ app.get('/', function (req, res) {
   res.sendFile(__dirname + '/public/views/index.html');
 });
 
+//Load about.html
+app.get('/about', function (req, res) {
+  res.sendFile(__dirname + '/public/views/about.html');
+});
+
 //Get all posts
 app.get('/api/posts', function (req, res) {
 	res.json(posts);
