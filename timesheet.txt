@@ -1,0 +1,10 @@
+timesheet.txt
+
+Sat
+----------------------------------
+6:00pm - 8:30pm // set-up project, some methods of postController, api routes, basic css, post template, html setup.
+
+9:45pm - 11:30pm // create new post, delete post, minor css updates
+
+----------------------------------
+TOTAL TIME : 4h 15m

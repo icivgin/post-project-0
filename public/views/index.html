@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- bootstrap css -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+	<!-- custom styles -->
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+
+	<title>Post Project</title>
+</head>
+<body>
+	<div class='jumbotron'>
+		<div class='container'>
+			<h1>Post-Project</h1>
+			<p>By Ian Civgin</p>
+
+			<!-- Add new post link -->
+			<a href='#' type='button' id='create-new-post' data-toggle='modal' data-target='#new-post-modal'>Create a new post</a>
+		</div>
+	</div>
+	<div class='container'>
+		
+		<!-- Post list -->
+		<div class='row' id='post-list'></div>
+
+	</div>
+
+	<!-- Modal / Form -->
+	<div class="modal fade" id="new-post-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dimdiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel">Make a new post!</h4>
+	      </div>
+	      <div class="modal-body">
+	        <form class='form-group' id='new-post-form'>
+	        	<label for='author'>Your name</label>
+				<input class='form-control' id='author' type="text" placeholder='Full name' focus></input>
+
+				<label for='title'>Post title</label>
+				<input class='form-control' id='title' type="text"></input>
+
+				<label for='bio'>A bit about yourself ...</label>
+				<textarea class='form-control' rows='4' id='bio' type="text"></textarea>
+
+				<label for='tag'>Tag</label>
+				<input class='form-control' id='tag' type="text" placeholder='Add a tag (start with a "#").'></input>
+
+				<label for='content'>Content</label>
+				<textarea class='form-control' rows='4' id='content' type="text"></textarea>
+
+				<label for='location'>Location</label>
+				<input class='form-control' id='location' type="text" placeholder='Add a location'></input>
+
+				<label for='picture'>Add a picture (url)</label>
+				<input class='form-control' id='picture' type="text" placeholder='Add a picture url.'></input>
+
+				<div class='text-right form-options'>
+					<button type="button" class="btn btn-default" data-dimdiss="modal">Close</button>
+					<input type="submit" class="btn btn-primary"></input>
+				</div>
+	        </form>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<!-- Modal / -->
+
+	<!-- jquery -->
+	<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+	<!-- bootstrap js -->
+	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+	<!-- underscore -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+
+	<!-- custom script -->
+	<script type="text/javascript" src="scripts/app.js"></script>
+
+	<script type='text/template' id='post-template'>
+		<div class='row post post-container' id='<%= id %>' data-id='<%= id %>'>
+			<div class='col-md-8 col-md-offset-2'>
+				<div class='row'>
+					<div class='col-md-3'>
+						<img class='author-img' src='<%= picture %>' />
+					</div>
+					<div class='col-md-9 info-rel'>
+						<button class="close right-side delete-post" aria-label="Close">
+						  <span aria-hidden="true">&times;</span>
+						</button>
+						<div class='row info-top-abs'>
+							<h3 class='inline'><%= author %> - </h3><p class='inline'><%= location %></p>
+						</div>
+						<div class='row info-bottom-abs'>
+							<h5><%= bio %></h5>
+						</div>
+					</div>
+				</div>
+				<hr>
+				<div class='row'>
+					<h3 class='tag'><%= tag %> - <%= title %></h3>
+					<div class='col-md-10'>
+						<p><%= content %></p>
+					</div>
+					<div class='col-md-2'>
+						<p>Respond</p>
+						<p>Like</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</script>
+</body>
+</html>

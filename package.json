@@ -1,0 +1,24 @@
+{
+  "name": "post_project_0",
+  "version": "1.0.0",
+  "description": "API Practice with posts.",
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Ian Civgin",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.13.2",
+    "chai": "^3.0.0",
+    "cheerio": "^0.19.0",
+    "express": "^4.13.1",
+    "mocha": "^2.2.5",
+    "request": "^2.58.0",
+    "underscore": "^1.8.3"
+  }
+}

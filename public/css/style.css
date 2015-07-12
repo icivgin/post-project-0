@@ -1,0 +1,48 @@
+/*New post button & modal*/
+#create-new-post {
+	padding-bottom: 20px;
+	font-size: 16px;
+}
+input {
+	margin-bottom: 5px;
+}
+textarea {
+	margin-bottom: 5px;
+}
+.form-options {
+	margin-top: 20px;
+}
+
+/*Post*/
+.inline {
+	display: inline;
+}
+
+.info-rel {
+	position: relative;
+	min-height: 150px;
+}
+.info-top-abs {
+	position: absolute;
+	bottom: 30px;
+}
+.info-bottom-abs {
+	position: absolute;
+	bottom: 0;
+}
+.tag {
+	padding-left: 15px;
+}
+
+.right {
+	float: right;
+}
+.author-img {
+	max-height: 150px;
+}
+
+.post-container {
+	border: dotted black 1px;
+	margin-bottom: 20px;
+	padding: 20px;
+}
