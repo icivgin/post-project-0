@@ -1,7 +1,7 @@
 $(function() {
 
 	var userIdCount = 0;
-	var postIdCount = 4;
+	var postIdCount = 5;
 
 	// User Constructor when this functionality is added
 
@@ -16,8 +16,13 @@ $(function() {
 	// 	userIdCount++;
 	// }
 
-	function Post (title, author, bio, tag, content, location, picture) {
-		this.id = postIdCount;
+	function Post (title, author, bio, tag, content, location, picture, prevId) {
+		if(!prevId) {
+			this.id = postIdCount;
+		}
+		else {
+			this.id = prevId;
+		}
 		this.title = title;
 		this.author = author;
 		this.bio = bio;
@@ -47,20 +52,20 @@ $(function() {
 			});
 		},
 
-		//tag load
-		tags: function() {
-			$.get('http://localhost:3000/api/posts', function (data) {
-				var allPosts = data;
+		//tag load to be used to show only certain tags
+		// tags: function() {
+		// 	$.get('http://localhost:3000/api/posts', function (data) {
+		// 		var allPosts = data;
 
-				_.each(allPosts, function(post) {
-					var tags = [];
-					tags.push(post.tag);
+		// 		_.each(allPosts, function(post) {
+		// 			var tags = [];
+		// 			tags.push(post.tag);
 					
-					//Add post tags to list template
+		// 			//Add post tags to list template
 
-				});
-			});
-		},
+		// 		});
+		// 	});
+		// },
 
 		//create
 		create: function(newPost) {
@@ -70,7 +75,6 @@ $(function() {
 				data: newPost,
 				success: function (data) {
 					$("#new-post-modal").modal("hide");
-					postController.setupView();
 				},
 				error: function() {
 					alert('Error!');
@@ -78,7 +82,22 @@ $(function() {
 			});
 		},
 
-		//update
+		// update
+		update: function (updatedPost, updateId) {
+			$.ajax({
+				url: 'http://localhost:3000/api/posts/' + updateId,
+				type: 'PUT',
+				data: updatedPost,
+				success: function (data) {
+					$(".edit-post-modal").modal("hide");
+					$('#' + updateId).replaceWith(postController.template(updatedPost));
+				},
+				error: function() {
+					alert('Error!');
+				}
+			});
+		},
+
 		//clear
 		clear: function() {
 			$('#post-list').html('');
@@ -99,14 +118,34 @@ $(function() {
 
 		//add event handlers 
 		addEventHandlers: function() {
-		  $('#post-list')
-		    
-		    // for delete: click event on `.delete-phrase` button
-		    .on('click', '.delete-post', function(event) {
-		      event.preventDefault();
-		      var deleteId = $(this).closest('.post').attr('id');
-		      postController.delete(deleteId);
-		    });
+			$('#post-list')
+
+			    // for delete: click event on `.delete-post` button
+			    .on('click', '.delete-post', function(event) {
+			      event.preventDefault();
+			      var deleteId = $(this).closest('.post').attr('id');
+			      postController.delete(deleteId);
+			    })
+
+			    //update
+			    .on('submit', '.update-post', function(event) {
+			    	event.preventDefault();
+
+			    	var updateId = $(this).closest('.update-post').attr('data-id');
+			    	var updatedPost = new Post(
+			    			$(this).find('#edit-title').val(),
+			    			$(this).find('#edit-author').val(),
+			    			$(this).find('#edit-bio').val(),
+			    			$(this).find('#edit-tag').val(),
+			    			$(this).find('#edit-content').val(),
+			    			$(this).find('#edit-location').val(),
+			    			$(this).find('#edit-picture').val(),
+			    			updateId
+			    		);
+
+			    	postController.update(updatedPost, updateId);
+			    })
+
 		},
 
 
@@ -120,6 +159,7 @@ $(function() {
 			  event.preventDefault();
 			  var newPostFromForm = new Post ($('#title').val(), $('#author').val(), $('#bio').val(), $('#tag').val(), $('#content').val(), $('#location').val(), $('#picture').val())
 			  console.log(newPostFromForm);
+			  $('#post-list').append(postController.template(newPostFromForm));
 
 			  postController.create(newPostFromForm);
 			  

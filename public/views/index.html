@@ -29,13 +29,12 @@
 		    </div>
 
 		    <!-- Collect the nav links, forms, and other content for toggling -->
-		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		    <div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
 		      <ul class="nav navbar-nav">
 		      </ul>
-		      <ul class="nav navbar-nav navbar-right">
+		      <ul class="nav navbar-nav">
 		        <li><a href="#">Me</a></li>
-		        <li><a href="#">Feed</a></li>
-		        <li><a href="http://localhost:3000/about">About</a></li>
+		        <li><a href="#post-list">Feed</a></li>
 		    	<li><a href='#' id='create-new-post' data-toggle='modal' data-target='#new-post-modal'>New</a></li>
 		      </ul>
 		    </div><!-- /.navbar-collapse -->
@@ -83,7 +82,7 @@
 
 				<div class='text-right form-options'>
 					<button type="button" class="btn btn-default" data-dimdiss="modal">Close</button>
-					<input type="submit" class="btn btn-primary"></input>
+					<input type="submit" class="btn btn-primary new-post-form-submit"></input>
 				</div>
 	        </form>
 	      </div>
@@ -130,13 +129,13 @@
 						<p><%= content %></p>
 					</div>
 					<div class='col-md-2'>
-						<a href='#' id='edit-post' data-toggle='modal' data-target='#edit-post-modal-<%= id %>'>Edit</a>
+						<a href='#' id='edit-post' data-toggle='modal' data-target='#update-<%= id %>'>Edit</a>
 						<p>Respond<br>Like</p>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="modal fade" id="edit-post-modal-<%= id %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class='modal fade edit-post-modal' id='update-<%= id %>' tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		  <div class="modal-dialog" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">
@@ -144,30 +143,30 @@
 		        <h4 class="modal-title" id="myModalLabel">Edit your post</h4>
 		      </div>
 		      <div class="modal-body">
-		        <form class='form-group' id='edit-post-form-<%= id %>'>
+		        <form class='form-group update-post' data-id='<%= id %>'>
 		        	<label for='author'>Author</label>
-					<input class='form-control' id='author' type="text" value='<%= author %>' focus></input>
+					<input class='form-control' id='edit-author' type="text" value='<%= author %>' focus></input>
 
 					<label for='title'>Post title</label>
-					<input class='form-control' id='title' type="text" value='<%= title %>'></input>
+					<input class='form-control' id='edit-title' type="text" value='<%= title %>'></input>
 
 					<label for='bio'>A bit about yourself ...</label>
-					<textarea class='form-control' rows='2' id='bio' type="text"><%= bio %></textarea>
+					<textarea class='form-control' rows='2' id='edit-bio' type="text"><%= bio %></textarea>
 
 					<label for='tag'>Tag</label>
-					<input class='form-control' id='tag' type="text" value='<%= tag %>'></input>
+					<input class='form-control' id='edit-tag' type="text" value='<%= tag %>'></input>
 
 					<label for='content'>Content</label>
-					<textarea class='form-control' rows='4' id='content' type="text"><%= content %></textarea>
+					<textarea class='form-control' rows='4' id='edit-content' type="text"><%= content %></textarea>
 
 					<label for='location'>Location</label>
-					<input class='form-control' id='location' type="text" value='<%= location %>'></input>
+					<input class='form-control' id='edit-location' type="text" value='<%= location %>'></input>
 
 					<label for='picture'>Add a picture (url)</label>
-					<input class='form-control' id='picture' type="text" value='<%= picture %>'></input>
+					<input class='form-control' id='edit-picture' type="text" value='<%= picture %>'></input>
 
 					<div class='text-right form-options'>
-						<button type="button" class="btn btn-default" data-dimdiss="modal">Close</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 						<input type="submit" class="btn btn-primary"></input>
 					</div>
 		        </form>

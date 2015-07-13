@@ -57,11 +57,6 @@ app.get('/', function (req, res) {
   res.sendFile(__dirname + '/public/views/index.html');
 });
 
-//Load about.html
-app.get('/about', function (req, res) {
-  res.sendFile(__dirname + '/public/views/about.html');
-});
-
 //Get all posts
 app.get('/api/posts', function (req, res) {
 	res.json(posts);
@@ -78,7 +73,7 @@ app.get('/api/posts/:id', function (req, res) {
 //Create a new post
 app.post('/api/posts', function (req, res) {
 	var newPost = {};
-	newPost.id = req.body.id;
+	newPost.id = JSON.parse(req.body.id);
 	newPost.title = req.body.title;
 	newPost.author = req.body.author;
 	newPost.tag = req.body.tag;
@@ -106,7 +101,16 @@ app.delete('/api/posts/:id', function (req, res) {
 
 //Update a post
 app.put('/api/posts/:id', function (req, res) {
-
+	var targetId = parseInt(req.params.id);
+	var foundPost = _.findWhere(posts, {id: targetId});
+	var index = posts.indexOf(foundPost);
+	//find index of found post in posts[]
+	//replace posts[i] with updatedPost
+	var updatedPost = req.body;
+	updatedPost.id = JSON.parse(updatedPost.id);
+	console.log(updatedPost);
+	posts[index] = updatedPost;
+	res.json(posts);
 });
 
 // listen on port 3000
