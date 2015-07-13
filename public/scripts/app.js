@@ -16,7 +16,7 @@ $(function() {
 	// 	userIdCount++;
 	// }
 
-	function Post (title, author, bio, tag, content, location, picture, prevId) {
+	function Post (title, author, tag, content, location, picture, prevId) {
 		if(!prevId) {
 			this.id = postIdCount;
 		}
@@ -25,7 +25,6 @@ $(function() {
 		}
 		this.title = title;
 		this.author = author;
-		this.bio = bio;
 		this.tag = tag;
 		this.content = content;
 		this.location = location;
@@ -135,7 +134,6 @@ $(function() {
 			    	var updatedPost = new Post(
 			    			$(this).find('#edit-title').val(),
 			    			$(this).find('#edit-author').val(),
-			    			$(this).find('#edit-bio').val(),
 			    			$(this).find('#edit-tag').val(),
 			    			$(this).find('#edit-content').val(),
 			    			$(this).find('#edit-location').val(),
@@ -157,7 +155,7 @@ $(function() {
 			// add event-handler to new-phrase form
 			$('#new-post-form').on('submit', function(event) {
 			  event.preventDefault();
-			  var newPostFromForm = new Post ($('#title').val(), $('#author').val(), $('#bio').val(), $('#tag').val(), $('#content').val(), $('#location').val(), $('#picture').val())
+			  var newPostFromForm = new Post ($('#title').val(), $('#author').val(), $('#tag').val(), $('#content').val(), $('#location').val(), $('#picture').val())
 			  console.log(newPostFromForm);
 			  $('#post-list').append(postController.template(newPostFromForm));
 

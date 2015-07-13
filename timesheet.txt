@@ -12,5 +12,7 @@ Sun
 
 9:00pm - 11:30pm // Fixing bugs I created and added edit/update functionality.
 
+11:30pm - 12:00pm // Styling and changed edit button ... Now it looks nicer. Also removed bio functionality.
+
 ----------------------------------
-TOTAL TIME : 8h 30m
+TOTAL TIME : 9h 00m

@@ -14,7 +14,6 @@ var posts = [
 		id: 1,
 		title: 'I had the coolest surf sesh yesterday',
 		author: 'Ian Civgin',
-		bio: "I'm a cool dude lookin to write about my adventures",
 		tag: '#surfing',
 		content: 'The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.',
 		location: 'San Francisco, CA',
@@ -24,7 +23,6 @@ var posts = [
 		id: 2,
 		title: 'I climbed a pretty cool thing',
 		author: 'E.N. Civgin',
-		bio: 'Alter ego of I.C., also a B.A.',
 		tag: '#climbing',
 		content: 'The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.',
 		location: 'San Fernando, CA',
@@ -38,7 +36,6 @@ var posts = [
 		content: 'No sun will shine in my day today (no sun will shine)',
 		location: 'Jamaica',
 		picture: 'http://assets.rollingstone.com/assets/images/list_item/bob-marley-20110420/square.jpg',
-		bio: 'I enjoyed green things (while I was alive)' 
 	},
 	{ 
 		id: 4,
@@ -48,7 +45,6 @@ var posts = [
 		content: 'Oh my god there are so many damn forms to fill out! Why can\'t I make this any easier on myself?',
 		location: 'San Francisco, CA',
 		picture: 'http://squareonedsm.com/wp-content/uploads/2013/10/rubber-duck-300x300.jpg',
-		bio: "I'm a baller"
 	}
 ];
 
@@ -80,7 +76,6 @@ app.post('/api/posts', function (req, res) {
 	newPost.content = req.body.content;
 	newPost.location = req.body.location;
 	newPost.picture = req.body.picture;
-	newPost.bio = req.body.bio;
 
 	console.log(newPost);
 	posts.push(newPost);

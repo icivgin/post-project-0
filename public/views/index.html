@@ -17,7 +17,7 @@
 	<nav class="navbar navbar-default">
 	  <div class="container-fluid">
 	    <!-- Brand and toggle get grouped for better mobile display -->
-	    <div class='container'>
+	    <div class='container col-md-6 col-md-offset-3'>
 		    <div class="navbar-header">
 		      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
 		        <span class="sr-only">Toggle navigation</span>
@@ -65,9 +65,6 @@
 				<label for='title'>Post title</label>
 				<input class='form-control' id='title' type="text" placeholder='Add a title'></input>
 
-				<label for='bio'>A bit about yourself ...</label>
-				<textarea class='form-control' rows='4' id='bio' type="text"></textarea>
-
 				<label for='tag'>Tag</label>
 				<input class='form-control' id='tag' type="text" placeholder='Add a tag (start with a "#")'></input>
 
@@ -107,32 +104,25 @@
 		<div class='row post' id='<%= id %>' data-id='<%= id %>'>
 			<div class='col-md-8 col-md-offset-2 post-container'>
 				<div class='row'>
-					<div class='col-md-3'>
-						<img class='author-img' src='<%= picture %>' />
+					<div class='col-md-2'>
+						<img class='author-img' src='<%= picture %>' /><br>
 					</div>
-					<div class='col-md-9 info-rel'>
+					<div class='col-md-10 info-rel'>
 						<button class="close right-side delete-post" aria-label="Close">
 						  <span aria-hidden="true">&times;</span>
 						</button>
+						<a class='edit-pencil edit-right' data-toggle='modal' data-target="#update-<%= id %>">
+						  <span class="glyphicon glyphicon-pencil edit"></span>
+						</a>
 						<div class='row info-top-abs'>
-							<h3 class='inline'><%= author %> </h3><p class='inline'><%= location %></p>
+							<h3 class='inline tag'><%= author %> </h3><p class='inline'><%= location %></p>
 						</div>
-						<div class='row info-bottom-abs'>
-							<h5><%= bio %></h5>
-						</div>
-					</div>
-				</div>
-				<hr>
-				<div class='row'>
-					<h3 class='tag'><%= tag %> - <%= title %></h3>
-					<div class='col-md-10'>
+						<hr>
+						<h4><span class='tag-color'><%= tag %> </span>- <%= title %></h4>
 						<p><%= content %></p>
 					</div>
-					<div class='col-md-2'>
-						<a href='#' id='edit-post' data-toggle='modal' data-target='#update-<%= id %>'>Edit</a>
-						<p>Respond<br>Like</p>
-					</div>
 				</div>
+				
 			</div>
 		</div>
 		<div class='modal fade edit-post-modal' id='update-<%= id %>' tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -149,9 +139,6 @@
 
 					<label for='title'>Post title</label>
 					<input class='form-control' id='edit-title' type="text" value='<%= title %>'></input>
-
-					<label for='bio'>A bit about yourself ...</label>
-					<textarea class='form-control' rows='2' id='edit-bio' type="text"><%= bio %></textarea>
 
 					<label for='tag'>Tag</label>
 					<input class='form-control' id='edit-tag' type="text" value='<%= tag %>'></input>
