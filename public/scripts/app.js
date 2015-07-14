@@ -41,6 +41,7 @@ $(function() {
 		//all
 		all: function () {
 			$.get('http://localhost:3000/api/posts', function (data) {
+				console.log(data);
 				var allPosts = data;
 
 				_.each(allPosts, function(post) {

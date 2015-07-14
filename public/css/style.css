@@ -4,17 +4,17 @@ body {
 
 /*Navbar*/
 .navbar {
-	background-color: linear-gradient(#00B760, #00AD5B);
-	background: -webkit-linear-gradient(#00B760, #00AD5B); /* For Safari 5.1 to 6.0 */
-	  background: -o-linear-gradient(#00B760, #00AD5B); /* For Opera 11.1 to 12.0 */
-	  background: -moz-linear-gradient(#00B760, #00AD5B); /* For Firefox 3.6 to 15 */
-	  background: linear-gradient(#00B760, #00AD5B); /* Standard syntax */
+	background-color: linear-gradient(#00B760, #00A356);
+	background: -webkit-linear-gradient(#00B760, #00A356); /* For Safari 5.1 to 6.0 */
+	  background: -o-linear-gradient(#00B760, #00A356); /* For Opera 11.1 to 12.0 */
+	  background: -moz-linear-gradient(#00B760, #00A356); /* For Firefox 3.6 to 15 */
+	  background: linear-gradient(#00B760, #00A356); /* Standard syntax */
 	color: white;
 	border-radius: 0px;
 }
 .navbar-default {
 	border-color: transparent;
-	border-bottom:solid darkgrey 1px;
+	border-bottom:solid #A3A3A3 1px;
 }
 
 .navbar-default
@@ -26,6 +26,7 @@ body {
 	color: white;
 	font-size: 28px;
 }
+
 .navbar-default
 .navbar-nav > li > a {
 	color: white;
@@ -33,6 +34,13 @@ body {
 	font-weight: 500;
 	margin-top: 2px;
 }
+
+.navbar-nav > li > a, .navbar-brand {
+    padding-top:12px !important; 
+    padding-bottom:0 !important;
+    height: 40px;
+}
+.navbar {min-height:50px !important;}
 
 /*New/edit post button & modal*/
 #create-new-post {
@@ -75,6 +83,9 @@ label {
 a.edit-pencil.edit-right {
 	color: #cccccc;
 }
+a.edit-pencil.edit-right:hover {
+	color: #808080;
+}
 hr {
 	margin-top: 10px;
 	margin-bottom: 10px;
@@ -94,12 +105,14 @@ hr {
 
 .author-img {
 	max-height: 109px;
+	margin-bottom: 10px;
 }
 
 .post-container {
 	margin-bottom: 20px;
 	border-radius: 5px;
-	border: solid lightgrey 1px;
+	border-bottom: solid lightgrey 1px;
+	border-left: solid lightgrey 1px;
 	padding: 20px;
 	background-color: white;
 }

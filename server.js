@@ -2,6 +2,11 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var _ = require('underscore');
+var mongoose = require('mongoose');
+
+mongoose.connect('mongodb://localhost/posts');
+
+var Post = require('./models/post');
 
 // tell app to use bodyParser middleware
 app.use(bodyParser.urlencoded({extended: true}));
@@ -9,44 +14,40 @@ app.use(bodyParser.urlencoded({extended: true}));
 // serve js and css files from public folder
 app.use(express.static(__dirname + '/public'));
 
-var posts = [
-	{
-		id: 1,
-		title: 'I had the coolest surf sesh yesterday',
-		author: 'Ian Civgin',
-		tag: '#surfing',
-		content: 'The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.',
-		location: 'San Francisco, CA',
-		picture: 'https://scontent.fsnc1-1.fna.fbcdn.net/hphotos-xpf1/v/t1.0-9/11000679_678310838972910_3327933139625114426_n.jpg?oh=a91307c797979205cb5eec2b7d17d5d5&oe=565B8718'
-	},
-	{
-		id: 2,
-		title: 'I climbed a pretty cool thing',
-		author: 'E.N. Civgin',
-		tag: '#climbing',
-		content: 'The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.',
-		location: 'San Fernando, CA',
-		picture: 'https://scontent.fsnc1-1.fna.fbcdn.net/hphotos-xpt1/t31.0-8/11043365_613309685473026_1961016179961777703_o.jpg'
-	},
-	{ 
-		id: 3,
-		title: 'I want to jam mon!',
-		author: 'Bob Marley',
-		tag: '#music',
-		content: 'No sun will shine in my day today (no sun will shine)',
-		location: 'Jamaica',
-		picture: 'http://assets.rollingstone.com/assets/images/list_item/bob-marley-20110420/square.jpg',
-	},
-	{ 
-		id: 4,
-		title: 'This is a test',
-		author: 'Ducky',
-		tag: '#testing123',
-		content: 'Oh my god there are so many damn forms to fill out! Why can\'t I make this any easier on myself?',
-		location: 'San Francisco, CA',
-		picture: 'http://squareonedsm.com/wp-content/uploads/2013/10/rubber-duck-300x300.jpg',
-	}
-];
+// var posts = [
+// 	{
+// 		title: 'I had the coolest surf sesh yesterday',
+// 		author: 'Ian Civgin',
+// 		tag: '#surfing',
+// 		content: 'The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.',
+// 		location: 'San Francisco, CA',
+// 		picture: 'https://scontent.fsnc1-1.fna.fbcdn.net/hphotos-xpf1/v/t1.0-9/11000679_678310838972910_3327933139625114426_n.jpg?oh=a91307c797979205cb5eec2b7d17d5d5&oe=565B8718'
+// 	},
+// 	{
+// 		title: 'I climbed a pretty cool thing',
+// 		author: 'E.N. Civgin',
+// 		tag: '#climbing',
+// 		content: 'The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.',
+// 		location: 'San Fernando, CA',
+// 		picture: 'https://scontent.fsnc1-1.fna.fbcdn.net/hphotos-xpt1/t31.0-8/11043365_613309685473026_1961016179961777703_o.jpg'
+// 	},
+// 	{ 
+// 		title: 'I want to jam mon!',
+// 		author: 'Bob Marley',
+// 		tag: '#music',
+// 		content: 'No sun will shine in my day today (no sun will shine)',
+// 		location: 'Jamaica',
+// 		picture: 'http://assets.rollingstone.com/assets/images/list_item/bob-marley-20110420/square.jpg',
+// 	},
+// 	{ 
+// 		title: 'This is a test',
+// 		author: 'Ducky',
+// 		tag: '#testing123',
+// 		content: 'Oh my god there are so many damn forms to fill out! Why can\'t I make this any easier on myself?',
+// 		location: 'San Francisco, CA',
+// 		picture: 'http://squareonedsm.com/wp-content/uploads/2013/10/rubber-duck-300x300.jpg',
+// 	}
+// ];
 
 //Load index.html
 app.get('/', function (req, res) {
@@ -55,7 +56,9 @@ app.get('/', function (req, res) {
 
 //Get all posts
 app.get('/api/posts', function (req, res) {
-	res.json(posts);
+	Post.find(function (err, posts) {
+		res.json(posts);
+	});
 });
 
 //Get a single post
@@ -68,16 +71,9 @@ app.get('/api/posts/:id', function (req, res) {
 
 //Create a new post
 app.post('/api/posts', function (req, res) {
-	var newPost = {};
+	var newPost = req.body;
 	newPost.id = JSON.parse(req.body.id);
-	newPost.title = req.body.title;
-	newPost.author = req.body.author;
-	newPost.tag = req.body.tag;
-	newPost.content = req.body.content;
-	newPost.location = req.body.location;
-	newPost.picture = req.body.picture;
 
-	console.log(newPost);
 	posts.push(newPost);
 
 	res.json(newPost);

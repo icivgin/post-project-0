@@ -10,14 +10,14 @@
 	<!-- custom styles -->
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 
-	<title>Postly</title>
+	<title>posted</title>
 </head>
 <body>
 	<!-- Navbar -->
 	<nav class="navbar navbar-default">
 	  <div class="container-fluid">
 	    <!-- Brand and toggle get grouped for better mobile display -->
-	    <div class='container col-md-6 col-md-offset-3'>
+	    <div class='container col-lg-6 col-lg-offset-3'>
 		    <div class="navbar-header">
 		      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
 		        <span class="sr-only">Toggle navigation</span>
@@ -25,7 +25,7 @@
 		        <span class="icon-bar"></span>
 		        <span class="icon-bar"></span>
 		      </button>
-		      <a class="navbar-brand" href="http://localhost:3000/">postly</a>
+		      <a class="navbar-brand" href="http://localhost:3000/">posted</a>
 		    </div>
 
 		    <!-- Collect the nav links, forms, and other content for toggling -->
@@ -78,7 +78,7 @@
 				<input class='form-control' id='picture' type="text" placeholder='Add a picture url'></input>
 
 				<div class='text-right form-options'>
-					<button type="button" class="btn btn-default" data-dimdiss="modal">Close</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					<input type="submit" class="btn btn-primary new-post-form-submit"></input>
 				</div>
 	        </form>
@@ -101,17 +101,17 @@
 	<script type="text/javascript" src="scripts/app.js"></script>
 
 	<script type='text/template' id='post-template'>
-		<div class='row post' id='<%= id %>' data-id='<%= id %>'>
-			<div class='col-md-8 col-md-offset-2 post-container'>
+		<div class='row post' id='<%= _id %>' data-id='<%= _id %>'>
+			<div class='col-lg-8 col-lg-offset-2 post-container'>
 				<div class='row'>
-					<div class='col-md-2'>
+					<div class='col-lg-2'>
 						<img class='author-img' src='<%= picture %>' /><br>
 					</div>
-					<div class='col-md-10 info-rel'>
+					<div class='col-lg-10 info-rel'>
 						<button class="close right-side delete-post" aria-label="Close">
 						  <span aria-hidden="true">&times;</span>
 						</button>
-						<a class='edit-pencil edit-right' data-toggle='modal' data-target="#update-<%= id %>">
+						<a class='edit-pencil edit-right' data-toggle='modal' data-target="#update-<%= _id %>">
 						  <span class="glyphicon glyphicon-pencil edit"></span>
 						</a>
 						<div class='row info-top-abs'>
@@ -125,7 +125,7 @@
 				
 			</div>
 		</div>
-		<div class='modal fade edit-post-modal' id='update-<%= id %>' tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class='modal fade edit-post-modal' id='update-<%= _id %>' tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		  <div class="modal-dialog" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">
@@ -133,7 +133,7 @@
 		        <h4 class="modal-title" id="myModalLabel">Edit your post</h4>
 		      </div>
 		      <div class="modal-body">
-		        <form class='form-group update-post' data-id='<%= id %>'>
+		        <form class='form-group update-post' data-id='<%= _id %>'>
 		        	<label for='author'>Author</label>
 					<input class='form-control' id='edit-author' type="text" value='<%= author %>' focus></input>
 

@@ -14,5 +14,11 @@ Sun
 
 11:30pm - 12:00pm // Styling and changed edit button ... Now it looks nicer. Also removed bio functionality.
 
+Mon
 ----------------------------------
-TOTAL TIME : 9h 00m
+10:00am - 10:15am // Styling
+
+9:45pm - 10:30pm // Added mongodb and got posts to load from db.
+
+----------------------------------
+TOTAL TIME : 10h 00m
