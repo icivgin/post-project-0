@@ -14,41 +14,6 @@ app.use(bodyParser.urlencoded({extended: true}));
 // serve js and css files from public folder
 app.use(express.static(__dirname + '/public'));
 
-// var posts = [
-// 	{
-// 		title: 'I had the coolest surf sesh yesterday',
-// 		author: 'Ian Civgin',
-// 		tag: '#surfing',
-// 		content: 'The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.',
-// 		location: 'San Francisco, CA',
-// 		picture: 'https://scontent.fsnc1-1.fna.fbcdn.net/hphotos-xpf1/v/t1.0-9/11000679_678310838972910_3327933139625114426_n.jpg?oh=a91307c797979205cb5eec2b7d17d5d5&oe=565B8718'
-// 	},
-// 	{
-// 		title: 'I climbed a pretty cool thing',
-// 		author: 'E.N. Civgin',
-// 		tag: '#climbing',
-// 		content: 'The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.',
-// 		location: 'San Fernando, CA',
-// 		picture: 'https://scontent.fsnc1-1.fna.fbcdn.net/hphotos-xpt1/t31.0-8/11043365_613309685473026_1961016179961777703_o.jpg'
-// 	},
-// 	{ 
-// 		title: 'I want to jam mon!',
-// 		author: 'Bob Marley',
-// 		tag: '#music',
-// 		content: 'No sun will shine in my day today (no sun will shine)',
-// 		location: 'Jamaica',
-// 		picture: 'http://assets.rollingstone.com/assets/images/list_item/bob-marley-20110420/square.jpg',
-// 	},
-// 	{ 
-// 		title: 'This is a test',
-// 		author: 'Ducky',
-// 		tag: '#testing123',
-// 		content: 'Oh my god there are so many damn forms to fill out! Why can\'t I make this any easier on myself?',
-// 		location: 'San Francisco, CA',
-// 		picture: 'http://squareonedsm.com/wp-content/uploads/2013/10/rubber-duck-300x300.jpg',
-// 	}
-// ];
-
 //Load index.html
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/public/views/index.html');
@@ -63,45 +28,54 @@ app.get('/api/posts', function (req, res) {
 
 //Get a single post
 app.get('/api/posts/:id', function (req, res) {
-	var targetId = parseInt(req.params.id);
-	var foundPost = _.findWhere(posts, {id: targetId});
+	var targetId = req.params.id;
 
-	res.json(foundPost);
+	Post.findOne({_id: targetId}, function (err, foundPost) {
+		res.json(foundPost);
+	});
 });
 
 //Create a new post
 app.post('/api/posts', function (req, res) {
-	var newPost = req.body;
-	newPost.id = JSON.parse(req.body.id);
+	var newPost = new Post({
+		title: req.body.title,
+		author: req.body.author,
+		tag: req.body.tag,
+		content: req.body.content,
+		location: req.body.location,
+		picture: req.body.picture
+	});
 
-	posts.push(newPost);
-
-	res.json(newPost);
+	newPost.save(function (err, savedPost) {
+		res.json(savedPost);
+	});
 });
 
 //Delete a post
 app.delete('/api/posts/:id', function (req, res) {
-	var targetId = parseInt(req.params.id);
-	var foundPost = _.findWhere(posts, {id: targetId});
+	var targetId = req.params.id;
 
-	var indexOfPost = posts.indexOf(foundPost);
-	posts.splice(indexOfPost, 1);
-
-	res.json(posts);
+  Post.findOneAndRemove({_id: targetId}, function (err, deletedPost) {
+    res.json(deletedPost);
+  });
 });
 
 //Update a post
 app.put('/api/posts/:id', function (req, res) {
-	var targetId = parseInt(req.params.id);
-	var foundPost = _.findWhere(posts, {id: targetId});
-	var index = posts.indexOf(foundPost);
-	//find index of found post in posts[]
-	//replace posts[i] with updatedPost
-	var updatedPost = req.body;
-	updatedPost.id = JSON.parse(updatedPost.id);
-	console.log(updatedPost);
-	posts[index] = updatedPost;
-	res.json(posts);
+	var targetId = req.params.id;
+
+	Post.findOne({_id: targetId}, function (err, foundPost) {
+		foundPost.title = req.body.title;
+		foundPost.author = req.body.author;
+		foundPost.tag = req.body.tag;
+		foundPost.content = req.body.content;
+		foundPost.location = req.body.location;
+		foundPost.picture = req.body.picture;
+
+		foundPost.save(function (err, savedPost) {
+			res.json(savedPost);
+		});
+	});
 });
 
 // listen on port 3000

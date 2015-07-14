@@ -20,5 +20,7 @@ Mon
 
 9:45pm - 10:30pm // Added mongodb and got posts to load from db.
 
+10:30pm - 11:00pm // Added all mongodb functionality for posts. Everything should be working now!
+
 ----------------------------------
-TOTAL TIME : 10h 00m
+TOTAL TIME : 10h 30m

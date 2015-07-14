@@ -1,7 +1,7 @@
 $(function() {
 
 	var userIdCount = 0;
-	var postIdCount = 5;
+	// var postIdCount = 5;
 
 	// User Constructor when this functionality is added
 
@@ -16,21 +16,13 @@ $(function() {
 	// 	userIdCount++;
 	// }
 
-	function Post (title, author, tag, content, location, picture, prevId) {
-		if(!prevId) {
-			this.id = postIdCount;
-		}
-		else {
-			this.id = prevId;
-		}
+	function Post (title, author, tag, content, location, picture) {
 		this.title = title;
 		this.author = author;
 		this.tag = tag;
 		this.content = content;
 		this.location = location;
 		this.picture = picture;
-
-		postIdCount++;
 	}
 
 	var postController = {
@@ -41,7 +33,6 @@ $(function() {
 		//all
 		all: function () {
 			$.get('http://localhost:3000/api/posts', function (data) {
-				console.log(data);
 				var allPosts = data;
 
 				_.each(allPosts, function(post) {
@@ -75,6 +66,7 @@ $(function() {
 				data: newPost,
 				success: function (data) {
 					$("#new-post-modal").modal("hide");
+					$('#post-list').append(postController.template(data));
 				},
 				error: function() {
 					alert('Error!');
@@ -90,7 +82,7 @@ $(function() {
 				data: updatedPost,
 				success: function (data) {
 					$(".edit-post-modal").modal("hide");
-					$('#' + updateId).replaceWith(postController.template(updatedPost));
+					$('#' + updateId).replaceWith(postController.template(data));
 				},
 				error: function() {
 					alert('Error!');
@@ -132,14 +124,14 @@ $(function() {
 			    	event.preventDefault();
 
 			    	var updateId = $(this).closest('.update-post').attr('data-id');
+			    	console.log(updateId);
 			    	var updatedPost = new Post(
 			    			$(this).find('#edit-title').val(),
 			    			$(this).find('#edit-author').val(),
 			    			$(this).find('#edit-tag').val(),
 			    			$(this).find('#edit-content').val(),
 			    			$(this).find('#edit-location').val(),
-			    			$(this).find('#edit-picture').val(),
-			    			updateId
+			    			$(this).find('#edit-picture').val()
 			    		);
 
 			    	postController.update(updatedPost, updateId);
@@ -156,9 +148,8 @@ $(function() {
 			// add event-handler to new-phrase form
 			$('#new-post-form').on('submit', function(event) {
 			  event.preventDefault();
-			  var newPostFromForm = new Post ($('#title').val(), $('#author').val(), $('#tag').val(), $('#content').val(), $('#location').val(), $('#picture').val())
+			  var newPostFromForm = new Post ($('#title').val(), $('#author').val(), $('#tag').val(), $('#content').val(), $('#location').val(), $('#picture').val());
 			  console.log(newPostFromForm);
-			  $('#post-list').append(postController.template(newPostFromForm));
 
 			  postController.create(newPostFromForm);
 			  
