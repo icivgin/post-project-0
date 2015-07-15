@@ -22,5 +22,9 @@ Mon
 
 10:30pm - 11:00pm // Added all mongodb functionality for posts. Everything should be working now!
 
+Tue
 ----------------------------------
-TOTAL TIME : 10h 30m
+9:00pm - 12:30pm // Added comments functionality. Built outside in all the way down to DB. You can add, and delete comments (need to still add edit). 
+
+----------------------------------
+TOTAL TIME : 14h 00m

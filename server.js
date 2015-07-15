@@ -7,6 +7,7 @@ var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/posts');
 
 var Post = require('./models/post');
+// var Comment = require('./models/comment');
 
 // tell app to use bodyParser middleware
 app.use(bodyParser.urlencoded({extended: true}));
@@ -60,19 +61,46 @@ app.delete('/api/posts/:id', function (req, res) {
   });
 });
 
+app.delete('/api/posts/:postId/:commentId', function (req, res) {
+	var postId = req.params.postId;
+	var commentId = req.params.commentId;
+	console.log(postId);
+	console.log(commentId);
+
+	// Post.findOne({'comments._id': commentId}, function (err, comment) {
+	// 	console.log(comment);
+	// 	// comment.remove();
+	// 	res.json(comment);
+	// });
+
+	Post.findByIdAndUpdate(postId, {
+		$pull: {
+			comments: {_id: commentId}
+		}
+	}, function (err, comment){
+		res.json(comment);
+	});
+
+});
+
 //Update a post
 app.put('/api/posts/:id', function (req, res) {
 	var targetId = req.params.id;
 
 	Post.findOne({_id: targetId}, function (err, foundPost) {
-		foundPost.title = req.body.title;
-		foundPost.author = req.body.author;
-		foundPost.tag = req.body.tag;
-		foundPost.content = req.body.content;
-		foundPost.location = req.body.location;
-		foundPost.picture = req.body.picture;
+		if(req.body.type == 'post') {
+			foundPost.title = req.body.title;
+			foundPost.author = req.body.author;
+			foundPost.tag = req.body.tag;
+			foundPost.content = req.body.content;
+			foundPost.location = req.body.location;
+			foundPost.picture = req.body.picture;
+		} else {
+			foundPost.comments.push({commentAuthor: req.body.commentAuthor, commentDate: req.body.commentDate, commentBody: req.body.commentBody, postId: req.body.postId});
+		}
 
 		foundPost.save(function (err, savedPost) {
+			console.log(savedPost);
 			res.json(savedPost);
 		});
 	});

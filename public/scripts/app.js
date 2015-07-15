@@ -23,12 +23,22 @@ $(function() {
 		this.content = content;
 		this.location = location;
 		this.picture = picture;
+		this.type = 'post';
+	}
+
+	function Comment (commentBody, postId) {
+		this.commentAuthor = 'Ian Civgin';
+		this.commentDate = new Date().toDateString();
+		this.commentBody = commentBody;
+		this.postId = postId;
+		this.type = 'comment';
 	}
 
 	var postController = {
 
 		//Template
 		template: _.template($('#post-template').html()),
+		commentTemplate: _.template($('#comment-template').html()),
 
 		//all
 		all: function () {
@@ -38,6 +48,10 @@ $(function() {
 				_.each(allPosts, function(post) {
 					var $newPost = $(postController.template(post));
 					$('#post-list').append($newPost);
+					console.log(post);
+					_.each(post.comments, function(comment) {
+						$('#comment-display-' + comment.postId).append(postController.commentTemplate(comment));
+					});
 				});
 				postController.addEventHandlers();
 			});
@@ -65,6 +79,7 @@ $(function() {
 				type: 'POST',
 				data: newPost,
 				success: function (data) {
+					console.log(data);
 					$("#new-post-modal").modal("hide");
 					$('#post-list').append(postController.template(data));
 				},
@@ -108,6 +123,37 @@ $(function() {
 			});
 		},
 
+		addComment: function (commentBody, postId) {
+			var newComment = new Comment(commentBody, postId);
+			$.ajax({
+				url: 'http://localhost:3000/api/posts/' + postId,
+				type: 'PUT',
+				data: newComment,
+				success: function (data) {
+					$('#comment-display-' + postId).append(postController.commentTemplate(data.comments[data.comments.length - 1]));
+					$('.comment-body').val('');
+					// $('#' + postId).replaceWith(postController.template(data));
+
+				},
+				error: function() {
+					alert('Error!');
+				}
+			});
+
+		},
+
+		deleteComment: function (postId, commentId) {
+			$.ajax({
+				url: 'http://localhost:3000/api/posts/' + postId + '/' + commentId,
+				type: 'DELETE',
+				success: function (data) {
+					alert('GREAT!');
+					console.log(data);
+				}
+
+			});
+		},
+
 		//add event handlers 
 		addEventHandlers: function() {
 			$('#post-list')
@@ -137,6 +183,28 @@ $(function() {
 			    	postController.update(updatedPost, updateId);
 			    })
 
+			    .on('click', '.add-comment', function(event) {
+			    	event.preventDefault();
+			    	var commentBody = $(this).parent().find('input').val();
+			    	var postId = $(this).parent().parent().parent().parent().attr('data-id');
+			    	console.log(postId);
+
+			    	postController.addComment(commentBody, postId);
+			    })
+
+			    //delete comment
+			    .on('click', '.delete-comment', function(event) {
+			    	event.preventDefault();
+			    	var r = confirm('Are you sure you want to delete this comment?');
+			    	if(r) {
+			    		var postId = $(this).parent().parent().parent().parent().parent().parent().attr('data-id');
+				    	var comment = $(this).parent().parent();
+				    	var commentId = $(this).parent().parent().attr('data-id');
+				    	postController.deleteComment(postId, commentId);
+				    	comment.remove();
+			    	}
+			    });
+
 		},
 
 
@@ -148,7 +216,7 @@ $(function() {
 			// add event-handler to new-phrase form
 			$('#new-post-form').on('submit', function(event) {
 			  event.preventDefault();
-			  var newPostFromForm = new Post ($('#title').val(), $('#author').val(), $('#tag').val(), $('#content').val(), $('#location').val(), $('#picture').val());
+			  var newPostFromForm = new Post ($('#title').val(), $('#author').val(), $('#tag').val(), $('#content').val(), $('#location').val(), $('#picture').val() || 'http://cdn3.rd.io/user/no-user-image-square.jpg');
 			  console.log(newPostFromForm);
 
 			  postController.create(newPostFromForm);
